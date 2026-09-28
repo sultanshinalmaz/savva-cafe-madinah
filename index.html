@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Savva · ساڤا — Specialty coffee in Madinah</title>
+<meta name="description" content="Savva (ساڤا) — specialty coffee in Bir Uthman, Madinah. Menu with prices, opening hours 6:30–2:00, map, WhatsApp and delivery. قهوة مختصة في المدينة المنورة.">
+<meta name="theme-color" content="#2a1d15">
+<meta property="og:title" content="Savva · ساڤا — Specialty coffee in Madinah">
+<meta property="og:description" content="A day in Savva is what you need to be savva.">
+<meta property="og:image" content="assets/img/photos/g06.webp">
+<link rel="icon" href="assets/img/brand/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/ReadexPro-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/ReadexPro-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  /* язык и заставка — до первой отрисовки */
+  (function () {
+    var d = document.documentElement, lang;
+    try { lang = localStorage.getItem('savva-lang'); } catch (e) {}
+    if (lang !== 'ar' && lang !== 'en') lang = /^ar/i.test(navigator.language || '') ? 'ar' : 'en';
+    d.lang = lang; d.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    d.classList.add('js');
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    if (location.hash) { window.__savvaHash = location.hash; history.replaceState(null, '', location.pathname + location.search); }
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('has-intro');
+  })();
+</script>
+<style>
+  /* заставка видна с первого кадра, ещё до загрузки style.css */
+  html.has-intro body { overflow: hidden; }
+  .intro { position: fixed; inset: 0; z-index: 100; background: #20150f; display: none; }
+  html.has-intro .intro { display: grid; place-items: center; }
+  [hidden] { display: none !important; }
+</style>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/css/style.css?v=5">
+</head>
+<body>
+
+<!-- ======= общие фигуры: логотип из меню кафе (вектор из PDF) ======= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <path id="lg-body" fill-rule="evenodd" d="M254.5 541.1L242.4 541.1C239.1 541.1 236.7 539.8 236.7 536.2L236.7 437L220.8 446C217.2 448.3 215.1 451.5 215.1 455.9L215.1 525.4C215.1 532.7 218 538.5 223.7 543.1C229.1 547.5 235.3 549.9 242.4 549.9L254.5 549.9L260.7 549.9C265.4 549.9 270 549 274.3 547C278.5 545.1 282.3 542.6 285.6 539.3C288.7 536.2 291.2 532.5 293.1 528.4L293.7 527.2L294.7 528.1C310.2 542.1 328.4 549.3 349.2 550.1L349.3 550.1C357 550.1 363.9 547.7 370 543L370.7 542.5L371.8 543.4C374.4 545.4 377.4 547.1 380.6 548.2C383.8 549.3 387.1 549.9 390.4 549.9C395.1 549.9 399.7 549 404.1 547.1C408.3 545.3 412.1 542.7 415.3 539.4C418.5 536.1 421.1 532.4 422.9 528.2C424.8 523.9 425.8 519.4 425.9 514.8L425.9 468.5L410 477.5C406.4 479.8 404.3 483 404.3 487.4L404.3 527.5C404.3 531.3 402.9 534.5 400.2 537.2C397.5 539.8 394.2 541.2 390.4 541.2C387.2 541.2 384.8 540 384.8 536.5L384.8 477.6L368.8 486.8C365.2 489 363.2 492.2 363.2 496.5L363.2 527.2C363.2 531 361.8 534.2 359 536.9C356.3 539.5 353.1 540.9 349.2 540.9C337.3 540.9 326.5 537.2 317 529.9C310.5 525 305.5 518.6 301.9 511.4C297.9 503.6 296.2 498.7 296.2 489.9L296.2 468.5L280.2 477.5L280.2 477.5C276.7 479.8 274.6 483 274.6 487.4L274.6 527.4C274.6 531.2 273.2 534.4 270.5 537.1C267.7 539.8 264.5 541.1 260.7 541.1L254.5 541.1M103.3 437L87.4 446C83.8 448.3 81.7 451.5 81.7 455.9L81.7 525.4C81.7 532.7 84.6 538.5 90.2 543.1C95.7 547.5 101.9 549.9 109 549.9L158.4 549.9C168.2 549.9 176.4 546.4 183.3 539.5C190.2 532.6 193.7 524.4 193.7 514.6L193.7 436.6C189.9 436.8 187.1 438.4 184 440.8C181.6 442.7 178.9 445.5 175.7 445.5C174.9 445.5 174.2 445.4 173.5 445.2L173.5 445.5L172.1 444.9C167.7 443 163.1 442.1 158.4 442.1C153.7 442.1 149.1 443.1 144.8 445.1C140.6 447 136.8 449.5 133.5 452.8C130.3 456 127.7 459.8 125.8 463.9C123.8 468.3 122.9 472.9 122.9 477.6L123 511.1C123 515.8 123.9 520.3 125.9 524.6C126.5 526.1 127.2 527.5 128.1 528.8C128.8 530 129.4 531.1 130.1 532.3C130.6 533.3 131 534.3 131 535.4C131 536.4 130.6 537.4 130.1 538.2C129.3 539.7 128 540.7 126.4 541.1L126.2 541.1L109 541.1C105.7 541.1 103.4 539.8 103.4 536.2L103.3 437M144.3 493.3L144.3 465.9C144.3 462.1 145.7 458.7 148.4 456C151.2 453.3 154.5 452 158.4 452C162.2 452 165.5 453.4 168.2 456C171 458.7 172.3 462.1 172.3 465.9L172.3 493.3L172.3 520.6C172.3 524.5 170.9 527.7 168.2 530.4C165.4 533.2 162.1 534.5 158.2 534.5L158.2 534.5C154.4 534.4 151.2 533 148.4 530.3C145.7 527.7 144.3 524.4 144.3 520.6L144.3 493.3"/>
+    <path id="lg-savva" fill-rule="evenodd" d="M113.5 684.3C134.1 684.3 148.1 669.5 148.1 653.8C148.1 637.1 131.2 629 112.9 624.3C95.8 619.9 89.3 615.3 89.3 612.1C89.3 609.4 93.8 607.6 100.2 607.6C111.4 607.6 128.7 613.1 138.6 628.8C145.1 623.8 147.7 618.4 147.7 613.5C147.7 602 133.8 592.3 119.8 591.5C119 591.4 118.1 591.4 117.3 591.4C97.4 591.4 81.7 604.8 81.7 618.1C81.7 625.2 86.3 632.5 97.1 637.5C104.6 641 114.3 644.4 122.2 648.7C130.5 653.1 133.6 659 133.6 664.2C133.6 672 126.9 678.7 120 678.7C112.9 678.7 105.6 670.2 105.6 658.5C105.6 654.6 106.5 650.5 108.5 646.4C105.7 644.9 102.8 644.3 100.1 644.3C91 644.3 83.1 651.6 83.1 661.1C83.1 664.2 84 667.5 85.9 671C91 680.4 103 684.3 113.5 684.3M350 695.2C360 695.2 372 685.7 372 667.7C372 665.2 371.8 662.5 371.3 659.7C370.9 657.3 370.4 654.7 369.9 651.9C376.5 659.3 384.7 660.2 390.7 674C393 679.2 397.4 682.1 404.7 682.1L414.5 682.1C405.3 658.2 404.6 619.6 398.4 606.6C394.5 598.4 386.3 597 371 597C372.9 598.2 374.6 601.6 376.3 606.4C359.1 623.5 357.2 688.6 338.7 688.6C341 693.1 345.3 695.2 350 695.2M386.9 659.6C379.4 653 368.7 651 368.7 638.1C368.8 629.1 370.8 619.4 377.6 610.8C381.9 626 385.1 649.2 386.9 659.6M317.6 688.8C325.2 688.8 333.5 681.5 338 671.2C345.8 652.8 352.8 624.4 352.8 613.3C352.8 601.3 343.5 595.5 335.1 595.5C329.7 595.5 324.4 598 321.4 603C322.6 602.5 323.7 602.2 324.6 602.2C332.6 602.2 334.5 617.9 335.7 624.5C336.3 628.4 336.7 633.4 336.7 638.9C336.7 649.3 335.5 661.1 333.7 668.8C332.3 674.8 330.7 677 329.2 677C326.7 677 324.3 671.1 322.8 666.3C317.8 649.6 316.8 639.2 312.9 623.2C307.9 603 300.4 604.1 283.7 603.9C290.4 617.4 299.5 647.7 301.4 664.1C303.5 682 310.2 688.8 317.6 688.8M242.8 688.8C250.3 688.8 258.6 681.5 263.1 671.2C270.9 652.8 277.9 624.4 277.9 613.3C277.9 601.3 268.6 595.5 260.3 595.5C254.8 595.5 249.5 598 246.6 603C247.7 602.5 248.8 602.2 249.8 602.2C257.7 602.2 259.6 617.9 260.8 624.5C261.4 628.4 261.8 633.4 261.8 638.9C261.8 649.3 260.6 661.1 258.8 668.8C257.4 674.8 255.8 677 254.3 677C251.8 677 249.4 671.1 247.9 666.3C242.9 649.6 241.9 639.2 238 623.2C233 603 225.5 604.1 208.8 603.9C215.6 617.4 224.6 647.7 226.5 664.1C228.6 682 235.3 688.8 242.8 688.8M151.6 695.2C161.6 695.2 173.6 685.7 173.6 667.7C173.6 665.2 173.3 662.5 172.9 659.7C172.5 657.3 172 654.7 171.5 651.9C178.1 659.3 186.3 660.2 192.3 674C194.6 679.2 199 682.1 206.3 682.1L216.1 682.1C206.9 658.2 206.2 619.6 200 606.6C196.1 598.4 187.9 597 172.6 597C174.5 598.2 176.2 601.6 177.8 606.4C160.6 623.5 158.8 688.6 140.3 688.6C142.6 693.1 146.8 695.2 151.6 695.2M188.5 659.6C181 653 170.3 651 170.3 638.1C170.4 629.1 172.3 619.4 179.2 610.8C183.4 626 186.7 649.2 188.5 659.6"/>
+    <g id="lg-dots"><circle cx="160.7" cy="411.7" r="8.4"/><circle cx="170.6" cy="428.6" r="8.4"/><circle cx="150.6" cy="428.6" r="8.4"/></g>
+    <!-- кофейное зерно -->
+    <g id="bean"><ellipse rx="7.4" ry="9.8"/><path d="M.6-8.6C-3.6-4.4 3.8.6-.6 8.6" fill="none" stroke="var(--bean-slit,#20150f)" stroke-width="1.7" stroke-linecap="round"/></g>
+    <!-- ниша у входа в форме зерна — рамка для фото -->
+    <clipPath id="clip-bean" clipPathUnits="objectBoundingBox">
+      <path d="M.5 0C.8 0 .97.14.97.3c0 .1-.07.15-.07.2s.07.1.07.2C.97.86.8 1 .5 1S.03.86.03.7c0-.1.07-.15.07-.2S.03.4.03.3C.03.14.2 0 .5 0Z"/>
+    </clipPath>
+    <!-- орнамент саду: ромбы, треугольники, «зубцы» -->
+    <pattern id="sadu" width="56" height="28" patternUnits="userSpaceOnUse">
+      <rect width="56" height="28" fill="var(--sadu-bg,#4a5340)"/>
+      <path d="M0 0h56v3H0zM0 25h56v3H0z" fill="var(--sadu-fg,#dfcbb3)"/>
+      <path d="M0 3l7 7 7-7zM14 3l7 7 7-7zM28 3l7 7 7-7zM42 3l7 7 7-7zM0 25l7-7 7 7zM14 25l7-7 7 7zM28 25l7-7 7 7zM42 25l7-7 7 7z" fill="var(--sadu-fg,#dfcbb3)" opacity=".9"/>
+      <path d="M28 8l6 6-6 6-6-6z" fill="var(--sadu-accent,#9c3b2a)"/>
+      <path d="M28 11l3 3-3 3-3-3z" fill="var(--sadu-fg,#dfcbb3)"/>
+      <path d="M0 8l6 6-6 6M56 8l-6 6 6 6" fill="var(--sadu-fg,#dfcbb3)"/>
+    </pattern>
+    <!-- иконки -->
+    <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></symbol>
+    <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></symbol>
+    <symbol id="i-dm" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M12 3a9 8.5 0 0 0-7.6 13l-1 4.5 4.3-1.6A9 8.5 0 1 0 12 3Z"/><path fill="currentColor" d="m6.8 14 3.4-3.6 2.3 1.8 4.4-2.4-3.4 3.6-2.3-1.8z"/></symbol>
+    <symbol id="i-tt" viewBox="0 0 24 24"><path fill="currentColor" d="M16.6 2h-3.3v13.3a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.1a6.3 6.3 0 1 0 5.3 6.2V8.6a7.8 7.8 0 0 0 4.4 1.4V6.7a4.4 4.4 0 0 1-4.4-4.4Z"/></symbol>
+    <symbol id="i-snap" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 2.8c3 0 5.2 2.3 5.2 5.3v2.3l1.7-.4c.6-.1 1 .6.5 1-.6.6-1.6.9-2.3 1.2.5 1.6 1.9 3.3 3.7 3.9-.4 1-2 1.2-2.8 1.4-.2.5-.2 1.3-.7 1.3-.8 0-1.7-.4-3 0-1 .4-1.5 1.4-2.3 1.4s-1.4-1-2.3-1.4c-1.3-.4-2.2 0-3 0-.5 0-.5-.8-.7-1.3-.8-.2-2.4-.4-2.8-1.4 1.8-.6 3.2-2.3 3.7-3.9-.7-.3-1.7-.6-2.3-1.2-.5-.4-.1-1.1.5-1l1.7.4V8.1c0-3 2.2-5.3 5.2-5.3Z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M5 3.5h3.2l1.6 4.2-2 1.3a11 11 0 0 0 5.2 5.2l1.3-2 4.2 1.6V17a2.5 2.5 0 0 1-2.7 2.5A15.5 15.5 0 0 1 2.5 6.2 2.5 2.5 0 0 1 5 3.5Z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.9" d="M12 21.5s-7-6.2-7-11.5a7 7 0 1 1 14 0c0 5.3-7 11.5-7 11.5Z"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" d="M6 19a2.5 2.5 0 1 0 0-.1M18 5a2.5 2.5 0 1 0 0 .1M8.5 19H15a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h6.5"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M4.5 8h15l-1.2 12.5H5.7zM8.5 8a3.5 3.5 0 0 1 7 0"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M6 2.5h8l4 4v15H6zM14 2.5v4h4M9 12h6M9 16h6"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.3" fill="none" stroke="currentColor" stroke-width="1.9"/><path fill="none" stroke="currentColor" stroke-width="1.9" d="M2.8 20c.6-3.4 3-5.3 6.2-5.3s5.6 1.9 6.2 5.3M15.5 5a3.3 3.3 0 0 1 0 6.3M18 14.9c1.8.8 3 2.5 3.3 5.1"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" d="m12 2.5 2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2l-5.9 3.2 1.3-6.5-4.9-4.6 6.6-.8Z"/></symbol>
+  </defs>
+</svg>
+
+<!-- ======================= ЗАСТАВКА ======================= -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__grain"></div>
+  <div class="intro__stage">
+    <div class="intro__logo">
+      <svg class="intro__body" viewBox="78 396 352 302"><use href="#lg-body"/></svg>
+      <svg class="intro__savva" viewBox="78 396 352 302"><use href="#lg-savva"/></svg>
+      <svg class="intro__beans" viewBox="78 396 352 302">
+        <g transform="translate(160.7 411.7)"><g class="ib" style="--i:0"><g class="ib__spin"><use href="#bean"/></g></g></g>
+        <g transform="translate(170.6 428.6)"><g class="ib" style="--i:1"><g class="ib__spin"><use href="#bean"/></g></g></g>
+        <g transform="translate(150.6 428.6)"><g class="ib" style="--i:2"><g class="ib__spin"><use href="#bean"/></g></g></g>
+      </svg>
+    </div>
+    <p class="intro__tag" data-t="intro.tag">Specialty coffee · Madinah</p>
+  </div>
+  <div class="intro__pour"><svg class="intro__wave intro__wave--back" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0 0H2400V60c-100 50-200 50-300 0s-200-50-300 0c-100 50-200 50-300 0s-200-50-300 0c-100 50-200 50-300 0s-200-50-300 0c-100 50-200 50-300 0s-200-50-300 0Z"/></svg><svg class="intro__wave intro__wave--front" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0 0H2400V60c-100 50-200 50-300 0s-200-50-300 0c-100 50-200 50-300 0s-200-50-300 0c-100 50-200 50-300 0s-200-50-300 0c-100 50-200 50-300 0s-200-50-300 0Z"/></svg></div>
+  <button class="intro__skip" type="button" data-t="skip">Skip</button>
+</div>
+
+<!-- ======================= ШАПКА ======================= -->
+<header class="top" id="topbar">
+  <a class="top__logo" href="#top" aria-label="Savva">
+    <svg viewBox="78 396 352 162"><use href="#lg-body"/><use href="#lg-dots" class="top__dots"/></svg>
+  </a>
+  <nav class="top__nav" id="nav" aria-label="Main">
+    <a href="#menu" data-t="nav.menu">Menu</a>
+    <a href="#finder" data-t="nav.finder">Your drink</a>
+    <a href="#day" data-t="nav.day">A day in Savva</a>
+    <a href="#latte" data-t="nav.latte">Latte art</a>
+    <a href="#space" data-t="nav.space">The space</a>
+    <a href="#visit" data-t="nav.visit">Visit</a>
+  </nav>
+  <div class="top__right">
+    <span class="status" data-status><i></i><b></b></span>
+    <button class="top__lang" type="button" id="langBtn" data-t="lang" data-t-aria="lang.label">ع</button>
+    <button class="top__burger" type="button" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+<!-- ======================= ПЕРВЫЙ ЭКРАН: полёт внутрь букв ======================= -->
+<section class="hero" id="top">
+  <div class="hero__stick">
+    <div class="hero__bg">
+      <i class="hero__branch hero__branch--a"></i>
+      <i class="hero__branch hero__branch--b"></i>
+    </div>
+    <p class="hero__kicker" data-t="hero.kicker">Specialty coffee · Bir Uthman, Madinah</p>
+    <h1 class="sr" data-t="hero.h1">Savva — specialty coffee in Madinah</h1>
+
+    <div class="hero__word" id="heroWord">
+      <img class="hero__poster" src="assets/video/pour-poster.webp" alt="">
+      <video class="hero__video" id="heroVideo" muted playsinline loop preload="none" poster="assets/video/pour-poster.webp"
+             data-src="assets/video/pour-720.mp4" data-src-mobile="assets/video/pour-480.mp4"></video>
+      <div class="hero__shade"></div>
+    </div>
+
+    <div class="hero__ar" aria-hidden="true">
+      <svg viewBox="78 396 352 162"><use href="#lg-body"/><use href="#lg-dots" class="hero__dots" id="heroDots"/></svg>
+    </div>
+
+    <div class="hero__chips">
+      <span class="chip status" data-status><i></i><b></b></span>
+      <a class="chip" href="#reviews"><svg><use href="#i-star"/></svg><b>4.7</b> <span data-t="rating">on Google</span> · 736</a>
+    </div>
+    <div class="hero__hint"><span data-t="hero.scroll">Scroll into the cup</span><i></i></div>
+
+    <div class="hero__end">
+      <p class="hero__motto" data-t-html="hero.motto">A day in Savva is what you need <em>to be savva.</em></p>
+      <div class="hero__cta">
+        <a class="btn btn--cream" href="#menu"><span data-t="hero.cta.menu">See the menu</span><svg><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--ghost" data-href="directions" target="_blank" rel="noopener"><svg><use href="#i-route"/></svg><span data-t="hero.cta.go">Get directions</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= САДУ-ЛЕНТА ======================= -->
+<div class="band" aria-hidden="true">
+  <svg class="band__sadu" width="100%" height="28"><rect width="100%" height="28" fill="url(#sadu)"/></svg>
+  <div class="band__run"><div class="band__track" id="bandTrack"></div></div>
+  <svg class="band__sadu" width="100%" height="28"><rect width="100%" height="28" fill="url(#sadu)"/></svg>
+</div>
+
+<!-- ======================= О КАФЕ ======================= -->
+<section class="about sec" id="about">
+  <div class="wrap about__grid">
+    <div class="about__text">
+      <p class="kicker" data-t="about.k">Hello from Savva</p>
+      <h2 class="h2 reveal" data-t-html="about.h">A small café with a <em>big</em> ritual.</h2>
+      <p class="lead reveal" data-t="about.p"></p>
+      <dl class="nums">
+        <div><dt data-count="20">20</dt><dd data-t="about.n1">hours a day</dd></div>
+        <div><dt data-count="4.7" data-dec="1">4.7</dt><dd data-t="about.n2">Google rating</dd></div>
+        <div><dt data-count="736">736</dt><dd data-t="about.n3">reviews</dd></div>
+        <div><dt data-count="40" id="menuCount">40</dt><dd data-t="about.n4">items on the menu</dd></div>
+      </dl>
+    </div>
+    <div class="about__pics">
+      <figure class="arch arch--tall reveal"><img src="assets/img/photos/g02.webp" alt="" loading="lazy"></figure>
+      <div class="beanwrap reveal"><figure class="beanframe"><img src="assets/img/photos/p_DdPEf8uNOSa.webp" alt="Madini cookies" loading="lazy"></figure><span class="beanwrap__tag"><b data-t="about.cookie">Madini cookies</b><span class="beanwrap__price" id="cookiePrice"></span></span></div>
+      <div class="about__cube" aria-hidden="true">
+        <span>QR</span><small>منيو · Menu</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= МЕНЮ ======================= -->
+<section class="menu sec" id="menu">
+  <i class="menu__branch" aria-hidden="true"></i>
+  <div class="wrap">
+    <div class="sec__head">
+      <p class="kicker" data-t="menu.k">Menu</p>
+      <h2 class="h2 reveal" data-t-html="menu.h"></h2>
+      <p class="lead reveal" data-t="menu.p"></p>
+    </div>
+    <div class="tabs" role="tablist" id="menuTabs"></div>
+    <div class="menu__board" id="menuBoard"></div>
+    <div class="menu__foot">
+      <a class="btn btn--line" data-href="menuPdf" target="_blank" rel="noopener"><svg><use href="#i-doc"/></svg><span data-t="menu.pdf">Open PDF menu</span></a>
+      <span class="menu__order"><span data-t="menu.order">Order on</span>
+        <a data-href="keeta" target="_blank" rel="noopener" class="pill pill--keeta" data-t="c.keeta">Keeta</a>
+        <span data-t="menu.or">or</span>
+        <a data-href="hungerstation" target="_blank" rel="noopener" class="pill pill--hs" data-t="c.hs">HungerStation</a>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ПОДБОР НАПИТКА ======================= -->
+<section class="finder sec" id="finder">
+  <div class="wrap finder__grid">
+    <div class="finder__side">
+      <p class="kicker" data-t="finder.k">Not sure what to order?</p>
+      <h2 class="h2 reveal" data-t-html="finder.h"></h2>
+      <div class="quiz" id="quiz">
+        <div class="quiz__step" data-step="temp">
+          <p class="quiz__q"><b>1</b><span data-t="finder.q1"></span></p>
+          <div class="quiz__opts">
+            <button type="button" data-v="hot" data-t="finder.hot"></button>
+            <button type="button" data-v="iced" data-t="finder.iced"></button>
+          </div>
+        </div>
+        <div class="quiz__step" data-step="base">
+          <p class="quiz__q"><b>2</b><span data-t="finder.q2"></span></p>
+          <div class="quiz__opts">
+            <button type="button" data-v="coffee" data-t="finder.coffee"></button>
+            <button type="button" data-v="matcha" data-t="finder.matcha"></button>
+            <button type="button" data-v="other" data-t="finder.other"></button>
+          </div>
+        </div>
+        <div class="quiz__step" data-step="mood">
+          <p class="quiz__q"><b>3</b><span data-t="finder.q3"></span></p>
+          <div class="quiz__opts">
+            <button type="button" data-v="strong" data-t="finder.strong"></button>
+            <button type="button" data-v="smooth" data-t="finder.smooth"></button>
+            <button type="button" data-v="sweet" data-t="finder.sweet"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="finder__cupbox">
+      <svg class="cup" id="cup" viewBox="0 0 240 320" aria-hidden="true">
+        <defs>
+          <clipPath id="cupIn"><path d="M40 70h160l-16 214a14 14 0 0 1-14 13H70a14 14 0 0 1-14-13Z"/></clipPath>
+        </defs>
+        <g class="cup__steam"><path d="M95 52c-8-12 8-18 0-32"/><path d="M120 50c-8-12 8-18 0-32"/><path d="M145 52c-8-12 8-18 0-32"/></g>
+        <g clip-path="url(#cupIn)">
+          <rect class="cup__glass" x="30" y="60" width="180" height="250"/>
+          <g class="cup__liquid" id="cupLiquid">
+            <path class="cup__wave" d="M-240 0c40-10 80-10 120 0s80 10 120 0 80-10 120 0 80 10 120 0 80-10 120 0 80 10 120 0V260H-240Z"/>
+          </g>
+          <g class="cup__ice" id="cupIce"><rect x="72" y="120" width="34" height="34" rx="7"/><rect x="118" y="100" width="36" height="36" rx="7" transform="rotate(14 136 118)"/><rect x="100" y="150" width="30" height="30" rx="6" transform="rotate(-10 115 165)"/></g>
+        </g>
+        <path class="cup__outline" d="M40 70h160l-16 214a14 14 0 0 1-14 13H70a14 14 0 0 1-14-13Z"/>
+        <g class="cup__sleeve"><path d="M47 150h146l-5 70H52Z"/><svg x="62" y="160" width="116" height="50" viewBox="78 589 348 108"><use href="#lg-savva"/></svg></g>
+        <rect class="cup__lid" x="30" y="58" width="180" height="16" rx="8"/>
+      </svg>
+      <div class="finder__result" id="finderResult" aria-live="polite">
+        <p class="finder__hello" data-t="finder.res">Your Savva is</p>
+        <p class="finder__name" id="finderName">—</p>
+        <p class="finder__alt" id="finderAlt"></p>
+        <p class="finder__meta" id="finderMeta"></p>
+        <p class="finder__pair" id="finderPair"></p>
+        <div class="finder__btns">
+          <a class="btn btn--wa" id="finderWa" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg><span data-t="finder.wa">Ask on WhatsApp</span></a>
+          <button class="btn btn--line" type="button" id="finderAgain" data-t="finder.again">Try again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ОДИН ДЕНЬ В SAVVA ======================= -->
+<section class="day" id="day">
+  <div class="day__sky" id="daySky"><i class="day__stars"></i></div>
+  <div class="wrap day__inner">
+    <div class="sec__head sec__head--light">
+      <p class="kicker" data-t="day.k">Our motto, literally</p>
+      <h2 class="h2" data-t-html="day.h"></h2>
+      <p class="lead" data-t="day.p"></p>
+    </div>
+    <div class="day__stage">
+      <svg class="day__arc" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true"><path id="dayArc" d="M20 290C200 20 800 20 980 290"/></svg>
+      <button class="day__sun" id="daySun" type="button" role="slider" aria-valuemin="0" aria-valuemax="1200" aria-label="Time">
+        <svg viewBox="-50 -50 100 100" aria-hidden="true">
+          <defs>
+            <radialGradient id="sunG" cx="40%" cy="38%" r="65%"><stop offset="0" stop-color="#fffaf0"/><stop offset=".55" stop-color="var(--sun, #ffd27a)"/><stop offset="1" stop-color="#f3a649"/></radialGradient>
+            <radialGradient id="moonG" cx="35%" cy="35%" r="75%"><stop offset="0" stop-color="#fffdf5"/><stop offset=".7" stop-color="#f1e7cc"/><stop offset="1" stop-color="#d9c9a3"/></radialGradient>
+            <mask id="moonCut"><rect x="-50" y="-50" width="100" height="100" fill="#fff"/><circle cx="11" cy="-7" r="19" fill="#000"/></mask>
+          </defs>
+          <g class="day__sunG">
+            <g class="day__rays"><path d="M0-40v9M0 31v9M-40 0h9M31 0h9M-28-28l6 6M22 22l6 6M-28 28l6-6M22-22l6-6"/></g>
+            <circle r="21" fill="url(#sunG)"/>
+          </g>
+          <g class="day__moonG">
+            <g mask="url(#moonCut)">
+              <circle r="22" fill="url(#moonG)"/>
+              <circle cx="-9" cy="6" r="3.2" fill="#d6c59e" opacity=".55"/><circle cx="-4" cy="14" r="2" fill="#d6c59e" opacity=".5"/><circle cx="-14" cy="-4" r="1.8" fill="#d6c59e" opacity=".45"/>
+            </g>
+          </g>
+        </svg>
+      </button>
+      <span class="day__now" id="dayNow"><i></i><b data-t="day.now">Now in Madinah</b></span>
+      <div class="day__card" id="dayCard">
+        <p class="day__time" id="dayTime">06:30</p>
+        <p class="day__text" id="dayText"></p>
+        <p class="day__item" id="dayItem"></p>
+      </div>
+    </div>
+    <div class="day__ticks" id="dayTicks"></div>
+  </div>
+  <div class="day__city" aria-hidden="true"></div>
+</section>
+
+<!-- ======================= ЛАТТЕ-АРТ ======================= -->
+<section class="latte sec" id="latte">
+  <div class="wrap latte__grid">
+    <div>
+      <p class="kicker" data-t="latte.k">Barista for a minute</p>
+      <h2 class="h2 reveal" data-t-html="latte.h"></h2>
+      <p class="lead reveal" data-t="latte.p"></p>
+      <div class="latte__btns">
+        <button class="btn btn--line" type="button" data-pour="heart" data-t="latte.heart">Heart</button>
+        <button class="btn btn--line" type="button" data-pour="tulip" data-t="latte.tulip">Tulip</button>
+        <button class="btn btn--line" type="button" data-pour="rosetta" data-t="latte.rosetta">Rosetta</button>
+        <button class="btn btn--ghost-dark" type="button" id="latteStir" data-t="latte.stir">Stir</button>
+        <button class="btn btn--ghost-dark" type="button" id="latteSave" data-t="latte.save">Save</button>
+      </div>
+    </div>
+    <div class="latte__cupwrap">
+      <div class="latte__saucer">
+        <div class="latte__cup">
+          <canvas id="latteCanvas" width="600" height="600" aria-label="Latte art canvas"></canvas>
+          <span class="latte__hint" id="latteHint" data-t="latte.hint">Draw here</span>
+        </div>
+        <i class="latte__handle"></i>
+        <svg class="latte__stamp" viewBox="78 589 348 108" aria-hidden="true"><use href="#lg-savva"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ПРОСТРАНСТВО ======================= -->
+<section class="space sec" id="space">
+  <div class="wrap">
+    <div class="sec__head">
+      <p class="kicker" data-t="space.k">The space</p>
+      <h2 class="h2 reveal" data-t-html="space.h"></h2>
+      <p class="lead reveal" data-t="space.p"></p>
+    </div>
+  </div>
+  <div class="space__rail" id="spaceRail" tabindex="0"></div>
+  <div class="wrap space__ctrl">
+    <div class="space__bar"><i id="spaceBar"></i></div>
+    <button class="space__btn" type="button" id="spacePrev" aria-label="Previous"><svg><use href="#i-arrow"/></svg></button>
+    <button class="space__btn" type="button" id="spaceNext" aria-label="Next"><svg><use href="#i-arrow"/></svg></button>
+  </div>
+</section>
+
+<!-- ======================= ОТЗЫВЫ ======================= -->
+<section class="reviews sec" id="reviews">
+  <div class="wrap">
+    <div class="reviews__top">
+      <div>
+        <p class="kicker" data-t="rev.k">What guests say</p>
+        <h2 class="h2 reveal" data-t-html="rev.h"></h2>
+      </div>
+      <div class="reviews__beans" aria-hidden="true" id="revBeans"></div>
+    </div>
+    <div class="reviews__tags"><span data-t="rev.tags">People mention</span><div id="revTags"></div></div>
+    <div class="reviews__grid" id="revGrid"></div>
+    <a class="btn btn--line" data-href="maps" target="_blank" rel="noopener"><span data-t="rev.all">All reviews on Google</span><svg><use href="#i-arrow"/></svg></a>
+  </div>
+</section>
+
+<!-- ======================= КАК НАЙТИ ======================= -->
+<section class="visit sec" id="visit">
+  <div class="wrap">
+    <div class="sec__head">
+      <p class="kicker" data-t="visit.k">Visit us</p>
+      <h2 class="h2 reveal" data-t-html="visit.h"></h2>
+    </div>
+    <div class="visit__grid">
+      <div class="visit__map">
+        <iframe id="mapFrame" title="Savva on Google Maps" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-src="map"></iframe>
+      </div>
+      <div class="visit__info">
+        <p class="visit__addr"><svg><use href="#i-pin"/></svg><span data-t="visit.addr"></span></p>
+        <div class="visit__btns">
+          <a class="btn btn--dark" data-href="directions" target="_blank" rel="noopener"><svg><use href="#i-route"/></svg><span data-t="visit.route">Route</span></a>
+          <a class="btn btn--line" data-href="maps" target="_blank" rel="noopener"><span data-t="visit.maps">Open in Google Maps</span></a>
+        </div>
+        <h3 class="h3" data-t="visit.hours">Opening hours</h3>
+        <table class="hours" id="hoursTable"></table>
+        <p class="visit__note" data-t="visit.note"></p>
+      </div>
+    </div>
+
+    <div class="contacts">
+      <div class="contacts__group">
+        <h3 class="h3" data-t="visit.write">Write to us</h3>
+        <div class="contacts__row">
+          <a class="cbtn cbtn--wa" data-href="wa" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg><span data-t="c.wa">WhatsApp</span><small dir="ltr" class="ph"></small></a>
+          <a class="cbtn" data-href="tel"><svg><use href="#i-phone"/></svg><span data-t="c.call">Call</span><small dir="ltr" class="ph"></small></a>
+          <a class="cbtn cbtn--ig" data-href="instagramDm" target="_blank" rel="noopener"><svg><use href="#i-dm"/></svg><span data-t="c.igdm">Instagram Direct</span><small>@savva_cafe</small></a>
+        </div>
+      </div>
+      <div class="contacts__group">
+        <h3 class="h3" data-t="visit.order">Order delivery</h3>
+        <div class="contacts__row">
+          <a class="cbtn cbtn--keeta" data-href="keeta" target="_blank" rel="noopener"><svg><use href="#i-bag"/></svg><span data-t="c.keeta">Keeta</span></a>
+          <a class="cbtn cbtn--hs" data-href="hungerstation" target="_blank" rel="noopener"><svg><use href="#i-bag"/></svg><span data-t="c.hs">HungerStation</span></a>
+        </div>
+      </div>
+      <div class="contacts__group">
+        <h3 class="h3" data-t="visit.follow">Follow</h3>
+        <div class="contacts__row">
+          <a class="cbtn" data-href="instagram" target="_blank" rel="noopener"><svg><use href="#i-ig"/></svg><span data-t="c.ig">Instagram</span></a>
+          <a class="cbtn" data-href="tiktok" target="_blank" rel="noopener"><svg><use href="#i-tt"/></svg><span data-t="c.tt">TikTok</span></a>
+          <a class="cbtn" data-href="snapchat" target="_blank" rel="noopener"><svg><use href="#i-snap"/></svg><span data-t="c.snap">Snapchat</span></a>
+          <a class="cbtn" data-href="instagramChannel" target="_blank" rel="noopener"><svg><use href="#i-people"/></svg><span data-t="c.ch">Savva community</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ======================= ПОДВАЛ ======================= -->
+<footer class="foot">
+  <svg class="band__sadu" width="100%" height="28" aria-hidden="true"><rect width="100%" height="28" fill="url(#sadu)"/></svg>
+  <div class="foot__word" aria-hidden="true">
+    <svg viewBox="78 589 350 108"><use href="#lg-savva"/></svg>
+  </div>
+  <div class="wrap foot__row">
+    <p class="foot__motto" data-t="foot.motto"></p>
+    <p class="foot__copy">© <span id="year"></span> Savva · ساڤا <span class="foot__credit" id="credit"></span></p>
+  </div>
+</footer>
+
+<a class="fab" data-href="wa" target="_blank" rel="noopener" data-t-aria="floating.wa" aria-label="WhatsApp"><svg><use href="#i-wa"/></svg></a>
+<div class="toast" id="toast" role="status"></div>
+<div class="beanrain" id="beanRain" aria-hidden="true"></div>
+
+<script src="assets/js/data.js?v=5"></script>
+<script src="assets/js/app.js?v=5"></script>
+</body>
+</html>
