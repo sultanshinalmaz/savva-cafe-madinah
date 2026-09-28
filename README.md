@@ -7,6 +7,13 @@ node dev-server.js      → http://localhost:8175
 node tools/check.mjs pc en out    — проверка в headless Chrome (pc|phone, en|ar)
 ```
 
+## Где живёт
+
+- Сайт: **https://savva-cafe-two.vercel.app** (Vercel, команда Almaz, проект `savva-cafe`)
+- Код: **https://github.com/sultanshinalmaz/savva-cafe-madinah**
+- Каждый `git push` в `main` выкатывается на сайт сам, примерно за полминуты.
+  Меняли стили или скрипты — поднимите `?v=` у ссылок в `index.html`, чтобы браузеры не держали старое.
+
 ## Что где
 
 | Файл | Что там |
