@@ -7,7 +7,9 @@
   var html = document.documentElement;
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* «меньше движения» не учитываем: его включает экономия заряда на Android,
+     и заказчик тогда не видел ни заставки, ни анимаций */
+  var reduce = false;
   var lang = html.lang === 'ar' ? 'ar' : 'en';
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
   var lerp = function (a, b, t) { return a + (b - a) * t; };
@@ -372,121 +374,159 @@
     if (d) { e.preventDefault(); dayUpdate(daySun.v + (html.dir === 'rtl' && /Left|Right/.test(e.key) ? -d : d)); }
   });
 
-  /* ---------------- латте-арт ---------------- */
-  var cv = $('#latteCanvas'), cx = cv.getContext('2d'), S = cv.width, hint = $('#latteHint'), pouring = false;
-  function crema() {
-    var g = cx.createRadialGradient(S * .46, S * .44, S * .05, S / 2, S / 2, S / 2);
-    g.addColorStop(0, '#8a5530'); g.addColorStop(.55, '#7a4623'); g.addColorStop(.86, '#5a3016'); g.addColorStop(1, '#3a1d0c');
-    cx.fillStyle = g; cx.fillRect(0, 0, S, S);
-    for (var i = 0; i < 900; i++) {
-      cx.fillStyle = 'rgba(' + (Math.random() < .5 ? '190,130,80' : '60,30,12') + ',' + (Math.random() * .18) + ')';
-      var a = Math.random() * 6.283, r = Math.sqrt(Math.random()) * S / 2;
-      cx.beginPath(); cx.arc(S / 2 + Math.cos(a) * r, S / 2 + Math.sin(a) * r, Math.random() * 2.4, 0, 6.283); cx.fill();
+  /* ---------------- латте-арт ----------------
+     Рисуем в логических единицах 600×600, холст — в реальном разрешении экрана.
+     Фигуры бариста — покадровая анимация: каждый кадр = крема + фигура на прогрессе t,
+     поэтому край не «пачкается» наслоением и движение плавное. */
+  var cv = $('#latteCanvas'), cx = cv.getContext('2d'), LW = 600, K = 1, hint = $('#latteHint'), pouring = false;
+  var MILK = '#faf4e8', CREMA = '#7a4623', base = document.createElement('canvas');
+  var easeOut = function (t) { return 1 - Math.pow(1 - t, 3); };
+  var easeInOut = function (t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+  var seg = function (t, a, b) { return clamp((t - a) / (b - a), 0, 1); };
+
+  function paintCrema(c, px) { // одинаковая крема при каждой перерисовке (фиксированный «случай»)
+    var seed = 7, rnd = function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    c.setTransform(px / LW, 0, 0, px / LW, 0, 0);
+    var g = c.createRadialGradient(LW * .46, LW * .44, LW * .05, LW / 2, LW / 2, LW / 2);
+    g.addColorStop(0, '#8d5832'); g.addColorStop(.55, '#7a4623'); g.addColorStop(.86, '#5a3016'); g.addColorStop(1, '#3a1d0c');
+    c.fillStyle = g; c.fillRect(0, 0, LW, LW);
+    for (var i = 0; i < 1100; i++) {
+      c.fillStyle = 'rgba(' + (rnd() < .5 ? '196,136,84' : '60,30,12') + ',' + (rnd() * .16).toFixed(3) + ')';
+      var a = rnd() * 6.283, r = Math.sqrt(rnd()) * LW / 2;
+      c.beginPath(); c.arc(LW / 2 + Math.cos(a) * r, LW / 2 + Math.sin(a) * r, .4 + rnd() * 1.8, 0, 6.283); c.fill();
     }
   }
+  function fit() { // размер холста = экранный размер × плотность пикселей
+    var w = cv.getBoundingClientRect().width || 400;
+    var px = Math.round(clamp(w * (window.devicePixelRatio || 1), 600, 1400));
+    if (cv.width === px && base.width === px) return;
+    var old = null;
+    if (cv.width) { old = document.createElement('canvas'); old.width = old.height = cv.width; old.getContext('2d').drawImage(cv, 0, 0); }
+    cv.width = cv.height = base.width = base.height = px; K = px / LW;
+    paintCrema(base.getContext('2d'), px);
+    cx.setTransform(1, 0, 0, 1, 0, 0);
+    if (old) cx.drawImage(old, 0, 0, px, px); else cx.drawImage(base, 0, 0);
+    cx.setTransform(K, 0, 0, K, 0, 0);
+  }
+  function drawBase() { cx.setTransform(1, 0, 0, 1, 0, 0); cx.drawImage(base, 0, 0); cx.setTransform(K, 0, 0, K, 0, 0); }
+  function fillShape(pathFn, color) { // заливка с мягким ореолом пены
+    cx.save(); cx.beginPath(); pathFn();
+    cx.fillStyle = color || MILK;
+    cx.shadowColor = color ? 'rgba(70,36,14,.45)' : 'rgba(250,244,232,.55)'; cx.shadowBlur = 9 * K;
+    cx.fill(); cx.shadowBlur = 0; cx.fill(); cx.restore();
+  }
+  function ellipse(x, y, rx, ry) { return function () { cx.ellipse(x, y, Math.max(.1, rx), Math.max(.1, ry), 0, 0, 6.283); }; }
+  function taper(x, y0, y1, w0, w1) { // протяжка молочником: клин от w0 к w1
+    return function () { cx.moveTo(x - w0 / 2, y0); cx.lineTo(x + w0 / 2, y0); cx.lineTo(x + w1 / 2, y1); cx.lineTo(x - w1 / 2, y1); cx.closePath(); cx.moveTo(x + w1 / 2, y1); cx.arc(x, y1, w1 / 2, 0, Math.PI); };
+  }
+  function heartPts(cxp, cyp, k, n) {
+    var pts = [];
+    for (var i = 0; i < n; i++) {
+      var t = i / n * 6.283;
+      pts.push([cxp + 16 * Math.pow(Math.sin(t), 3) * k, cyp - (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) * k]);
+    }
+    return pts;
+  }
+  function poly(pts) { return function () { pts.forEach(function (p, i) { i ? cx.lineTo(p[0], p[1]) : cx.moveTo(p[0], p[1]); }); cx.closePath(); }; }
+
+  var CC = LW / 2;
+  var SHAPES = {
+    /* пятно растёт → плавно перетекает в сердце (одинаковая параметризация круга и сердца) → протяжка */
+    heart: function (t) {
+      var a = easeOut(seg(t, 0, .45)), m = easeInOut(seg(t, .38, .78)), s = easeOut(seg(t, .74, 1));
+      var N = 120, H = heartPts(CC, 290, 10.4, N), R = 150 * a;
+      var pts = H.map(function (h, i) {
+        var th = i / N * 6.283, cp = [CC + Math.sin(th) * R, 318 - Math.cos(th) * R * .94];
+        return [lerp(cp[0], h[0], m), lerp(cp[1], h[1], m)];
+      });
+      if (R > .5) fillShape(poly(pts));
+      if (s > 0) fillShape(taper(CC, 120, lerp(120, 520, s), 5, 2.4));
+    },
+    /* четыре слоя, каждый «вдавливает» предыдущий тонкой каёмкой кремы */
+    tulip: function (t) {
+      var rows = [[392, 150, 92], [300, 120, 72], [222, 90, 55], [162, 52, 40]];
+      rows.forEach(function (r, j) {
+        var p = easeOut(seg(t, j * .17, j * .17 + .3)); if (!p) return;
+        if (j) fillShape(ellipse(CC, r[0] + 12 * p, (r[1] + 11) * p, (r[2] + 11) * p), CREMA);
+        fillShape(ellipse(CC, r[0], r[1] * p, r[2] * p));
+      });
+      var s = easeOut(seg(t, .8, 1));
+      if (s > 0) fillShape(taper(CC, 110, lerp(110, 505, s), 5, 2.4));
+    },
+    /* листья снизу вверх, покачиваясь из стороны в сторону, сверху сердечко, затем протяжка */
+    rosetta: function (t) {
+      var N = 15;
+      for (var i = 0; i < N; i++) {
+        var p = easeOut(seg(t, i / N * .62, i / N * .62 + .16)); if (!p) continue;
+        var f = i / (N - 1), y = lerp(478, 158, f), w = lerp(150, 34, f) * p, x = CC + (i % 2 ? 1 : -1) * lerp(10, 3, f);
+        fillShape((function (x, y, w) { return function () { cx.moveTo(x - w, y - 12); cx.quadraticCurveTo(x, y + 42, x + w, y - 12); cx.quadraticCurveTo(x, y + 15, x - w, y - 12); cx.closePath(); }; })(x, y, w));
+      }
+      var h = easeOut(seg(t, .7, .84));
+      if (h > 0) fillShape(poly(heartPts(CC, 118, 1.9 * h, 60)));
+      var s = easeOut(seg(t, .82, 1));
+      if (s > 0) fillShape(taper(CC, 100, lerp(100, 520, s), 4.5, 2));
+    }
+  };
+  function play(name, done) {
+    pouring = true; hint.classList.add('is-gone');
+    var t0 = performance.now(), ms = 2100;
+    (function frame(now) {
+      var t = clamp((now - t0) / ms, 0, 1);
+      drawBase(); SHAPES[name](t);
+      if (t < 1) requestAnimationFrame(frame); else { pouring = false; done && done(); }
+    })(t0);
+  }
+  function stir(then) { // ложка: картинка закручивается и растворяется в креме
+    pouring = true;
+    var snap = document.createElement('canvas'); snap.width = snap.height = cv.width; snap.getContext('2d').drawImage(cv, 0, 0);
+    var t0 = performance.now(), P = cv.width;
+    (function f(now) {
+      var k = clamp((now - t0) / 800, 0, 1);
+      cx.setTransform(1, 0, 0, 1, 0, 0); cx.drawImage(base, 0, 0);
+      cx.save(); cx.globalAlpha = 1 - easeInOut(k); cx.translate(P / 2, P / 2); cx.rotate(easeInOut(k) * 4.5); cx.translate(-P / 2, -P / 2); cx.drawImage(snap, 0, 0); cx.restore();
+      cx.setTransform(K, 0, 0, K, 0, 0);
+      if (k < 1) requestAnimationFrame(f); else { drawBase(); pouring = false; then && then(); }
+    })(t0);
+  }
+
+  /* рисование пальцем: мягкие мазки молока, толщина зависит от скорости */
   function blob(x, y, r, a) {
     var g = cx.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, 'rgba(250,244,232,' + (a == null ? .95 : a) + ')'); g.addColorStop(.7, 'rgba(246,236,218,' + ((a == null ? .95 : a) * .8) + ')'); g.addColorStop(1, 'rgba(240,226,204,0)');
+    g.addColorStop(0, 'rgba(250,244,232,' + a + ')'); g.addColorStop(.72, 'rgba(248,240,226,' + (a * .85) + ')'); g.addColorStop(1, 'rgba(240,226,204,0)');
     cx.fillStyle = g; cx.beginPath(); cx.arc(x, y, r, 0, 6.283); cx.fill();
   }
-  function line(pts, w, color) {
-    cx.strokeStyle = color || 'rgba(250,244,232,.95)'; cx.lineWidth = w; cx.lineCap = 'round'; cx.lineJoin = 'round';
-    cx.beginPath(); pts.forEach(function (p, i) { i ? cx.lineTo(p[0], p[1]) : cx.moveTo(p[0], p[1]); }); cx.stroke();
-  }
-  crema();
-  var last = null, lastT = 0;
-  function pos(e) { var r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * S, (e.clientY - r.top) / r.height * S]; }
-  cv.addEventListener('pointerdown', function (e) { if (pouring) return; cv.setPointerCapture(e.pointerId); last = pos(e); lastT = performance.now(); blob(last[0], last[1], 26); hint.classList.add('is-gone'); });
+  var last = null, lastT = 0, lastR = 22;
+  function pos(e) { var r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * LW, (e.clientY - r.top) / r.height * LW]; }
+  cv.addEventListener('pointerdown', function (e) {
+    if (pouring) return; e.preventDefault(); cv.setPointerCapture(e.pointerId);
+    last = pos(e); lastT = performance.now(); lastR = 24; blob(last[0], last[1], 24, .9); hint.classList.add('is-gone');
+  });
   cv.addEventListener('pointermove', function (e) {
     if (!last) return;
     var p = pos(e), now = performance.now(), dist = Math.hypot(p[0] - last[0], p[1] - last[1]), speed = dist / Math.max(1, now - lastT);
-    var r = clamp(30 - speed * 14, 7, 30), n = Math.ceil(dist / 4);
-    for (var i = 1; i <= n; i++) blob(lerp(last[0], p[0], i / n), lerp(last[1], p[1], i / n), r, .5);
-    last = p; lastT = now;
+    var r = lerp(lastR, clamp(28 - speed * 12, 6, 28), .25), n = Math.max(1, Math.ceil(dist / 2.5));
+    for (var i = 1; i <= n; i++) blob(lerp(last[0], p[0], i / n), lerp(last[1], p[1], i / n), lerp(lastR, r, i / n), .45);
+    last = p; lastT = now; lastR = r;
   });
   ['pointerup', 'pointercancel'].forEach(function (ev) { cv.addEventListener(ev, function () { last = null; }); });
 
-  function animatePour(steps, ms, done) {
-    pouring = true; hint.classList.add('is-gone');
-    var t0 = performance.now(), k = 0;
-    (function frame(t) {
-      var target = Math.floor(clamp((t - t0) / ms, 0, 1) * steps.length);
-      while (k < target) steps[k++]();
-      if (k < steps.length) requestAnimationFrame(frame); else { pouring = false; done && done(); }
-    })(t0);
-  }
-  /* молочные фигуры: чёткий край + лёгкое свечение, как у настоящей пены */
-  var MILK = 'rgba(250,244,232,.97)', CREMA = '#7a4623';
-  function soft(fn, color) { cx.save(); cx.fillStyle = color || MILK; cx.shadowColor = color ? 'rgba(90,48,22,.5)' : 'rgba(250,244,232,.55)'; cx.shadowBlur = 10; cx.beginPath(); fn(); cx.fill(); cx.restore(); }
-  function ell(x, y, rx, ry) { return function () { cx.ellipse(x, y, rx, ry, 0, 0, 6.283); }; }
-  function heartPath(x, y, k) {
-    return function () {
-      for (var i = 0; i <= 80; i++) {
-        var t = i / 80 * 6.283, hx = 16 * Math.pow(Math.sin(t), 3), hy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
-        i ? cx.lineTo(x + hx * k, y + hy * k) : cx.moveTo(x + hx * k, y + hy * k);
-      }
-      cx.closePath();
-    };
-  }
-  function pull(from, to, w0, w1, n) { // протяжка молочником: тонкая линия сверху вниз
-    var st = [], c = S / 2; n = n || 22;
-    for (var j = 1; j <= n; j++) (function (j) { st.push(function () { line([[c, lerp(from, to, (j - 1) / n)], [c, lerp(from, to, j / n)]], lerp(w0, w1, j / n), MILK); }); })(j);
-    return st;
-  }
-  var POURS = {
-    heart: function () {
-      var st = [], c = S / 2;
-      for (var i = 1; i <= 30; i++) (function (i) { st.push(function () { soft(ell(c, c + 40, 3.6 * i, 2.9 * i)); }); })(i);
-      for (var k = 1; k <= 12; k++) (function (k) { st.push(function () { soft(heartPath(c, c - 6, lerp(10, 11.2, k / 12))); }); })(k);
-      return st.concat(pull(c - 150, c + 205, 7, 2.5));
-    },
-    tulip: function () {
-      var st = [], c = S / 2, rows = [[c + 95, 150, 92], [c + 5, 118, 70], [c - 72, 86, 52], [c - 130, 44, 36]];
-      rows.forEach(function (r, n) {
-        for (var i = 1; i <= 12; i++) (function (i) { st.push(function () {
-          if (n) soft(ell(c, r[0] + 10, r[1] * i / 12 + 8, r[2] * i / 12 + 8), CREMA);
-          soft(ell(c, r[0], r[1] * i / 12, r[2] * i / 12));
-        }); })(i);
-      });
-      return st.concat(pull(c - 200, c + 195, 6, 2.5));
-    },
-    rosetta: function () {
-      var st = [], c = S / 2, N = 15;
-      for (var i = 0; i < N; i++) (function (i) {
-        var f = i / (N - 1), y = lerp(c + 175, c - 150, f), w = lerp(150, 34, f), dx = (i % 2 ? 1 : -1) * lerp(10, 3, f);
-        st.push(function () { soft(function () { var x = c + dx; cx.moveTo(x - w, y - 12); cx.quadraticCurveTo(x, y + 44, x + w, y - 12); cx.quadraticCurveTo(x, y + 16, x - w, y - 12); }); });
-      })(i);
-      st.push(function () { soft(heartPath(c, c - 185, 1.9)); });
-      return st.concat(pull(c - 200, c + 215, 5, 2));
-    }
-  };
-  function stir(then) {
-    pouring = true;
-    var snap = document.createElement('canvas'); snap.width = snap.height = S; snap.getContext('2d').drawImage(cv, 0, 0);
-    var t0 = performance.now(), base = document.createElement('canvas'); base.width = base.height = S;
-    var bc = cx; cx = base.getContext('2d'); crema(); cx = bc;
-    (function f(t) {
-      var k = clamp((t - t0) / 900, 0, 1);
-      cx.save(); cx.translate(S / 2, S / 2); cx.rotate(k * k * 5); cx.translate(-S / 2, -S / 2);
-      cx.drawImage(base, 0, 0); cx.globalAlpha = 1 - k; cx.drawImage(snap, 0, 0); cx.restore();
-      if (k < 1) requestAnimationFrame(f); else { crema(); pouring = false; then && then(); }
-    })(t0);
-  }
+  fit(); drawBase();
+  addEventListener('resize', function () { if (!pouring) fit(); });
   $$('[data-pour]').forEach(function (b) {
-    b.addEventListener('click', function () { if (pouring) return; var k = b.getAttribute('data-pour'); stir(function () { animatePour(POURS[k](), 1500); }); });
+    b.addEventListener('click', function () { if (pouring) return; var k = b.getAttribute('data-pour'); stir(function () { play(k); }); });
   });
   $('#latteStir').addEventListener('click', function () { if (!pouring) stir(); });
   $('#latteSave').addEventListener('click', function () {
-    var o = document.createElement('canvas'); o.width = o.height = 720; var c = o.getContext('2d');
-    c.fillStyle = '#f5eee3'; c.fillRect(0, 0, 720, 720);
-    c.save(); c.beginPath(); c.arc(360, 340, 300, 0, 6.283); c.clip(); c.drawImage(cv, 60, 40, 600, 600); c.restore();
-    c.fillStyle = '#4d5741'; c.font = '500 26px "Readex Pro", sans-serif'; c.textAlign = 'center';
-    c.fillText('SAVVA · ساڤا · Madinah', 360, 698);
+    var o = document.createElement('canvas'); o.width = o.height = 900; var c = o.getContext('2d');
+    c.fillStyle = '#f5eee3'; c.fillRect(0, 0, 900, 900);
+    c.save(); c.beginPath(); c.arc(450, 420, 380, 0, 6.283); c.clip(); c.drawImage(cv, 70, 40, 760, 760); c.restore();
+    c.fillStyle = '#4d5741'; c.font = '500 30px "Readex Pro", sans-serif'; c.textAlign = 'center';
+    c.fillText('SAVVA · ساڤا · Madinah', 450, 866);
     o.toBlob(function (b) { var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'savva-latte-art.png'; a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000); });
   });
   /* сердце само появляется, когда раздел впервые на экране */
   new IntersectionObserver(function (en, o) {
-    en.forEach(function (x) { if (x.isIntersecting) { o.disconnect(); setTimeout(function () { if (!last && !pouring) animatePour(POURS.heart(), 1500); }, 500); } });
+    en.forEach(function (x) { if (x.isIntersecting) { o.disconnect(); setTimeout(function () { if (!last && !pouring) { fit(); play('heart'); } }, 400); } });
   }, { threshold: .5 }).observe(cv);
 
   /* ---------------- галерея ---------------- */

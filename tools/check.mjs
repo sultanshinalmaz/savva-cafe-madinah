@@ -66,10 +66,13 @@ for (const id of secs) {
     for (const [i, name] of [[1, 'morning'], [5, 'night']]) { await ev(`document.querySelectorAll('#dayTicks button')[${i}].click()`); await sleep(1400); await shot('day-' + name); }
   }
   if (id === 'latte') {
-    await sleep(2500);
+    await sleep(3400);
     const clip = await ev(`(r=>({x:r.left,y:r.top+scrollY,width:r.width,height:r.height,scale:.6}))(document.getElementById('latteCanvas').getBoundingClientRect())`);
     await shot('latte-heart', clip);
-    for (const k of ['tulip', 'rosetta']) { await ev(`document.querySelector('[data-pour=${k}]').click()`); await sleep(3000); await shot('latte-' + k, clip); }
+    await ev(`document.querySelector('[data-pour=heart]').click()`); await sleep(800);
+    for (let f = 0; f < 10; f++) { await shot('heartf-' + f, { ...clip, scale: .3 }); await sleep(180); }
+    await sleep(1200);
+    for (const k of ['tulip', 'rosetta']) { await ev(`document.querySelector('[data-pour=${k}]').click()`); await sleep(3600); await shot('latte-' + k, clip); }
   }
   await shot('sec-' + id);
   const h = await ev(`document.getElementById('${id}').offsetHeight`);
